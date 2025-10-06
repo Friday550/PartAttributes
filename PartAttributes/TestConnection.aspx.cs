@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Web.UI;
 
 namespace PartAttributes
 {

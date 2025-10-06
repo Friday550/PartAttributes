@@ -151,6 +151,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="TestConnection.aspx" />
+    <Content Include="PartAttributeType2Entry.aspx" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -254,6 +255,13 @@
     </Compile>
     <Compile Include="TestConnection.aspx.designer.cs">
       <DependentUpon>TestConnection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PartAttributeType2Entry.aspx.cs">
+      <DependentUpon>PartAttributeType2Entry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PartAttributeType2Entry.aspx.designer.cs">
+      <DependentUpon>PartAttributeType2Entry.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -194,7 +194,10 @@
         <div class="container">
             <div class="header">
                 <h1>Part Attributes Database</h1>
-                <a href="PartAttributeEntry.aspx" class="btn btn-primary">+ Add New Part</a>
+                <div>
+                    <a href="PartAttributeEntry.aspx" class="btn btn-primary" style="margin-right: 10px;">+ Add IMPB Part</a>
+                    <a href="PartAttributeType2Entry.aspx" class="btn btn-primary" style="background-color: #28a745;">+ Add HPB Part</a>
+                </div>
             </div>
 
             <!-- Status Message -->
@@ -243,6 +246,8 @@
                         <asp:BoundField DataField="attrSystemVolts" HeaderText="System Volts" />
                         <asp:BoundField DataField="attrFrequency" HeaderText="Frequency" />
                         <asp:BoundField DataField="attrGround" HeaderText="Ground" />
+                        <asp:BoundField DataField="attrNeutral" HeaderText="Neutral" />
+                        <asp:BoundField DataField="attrSystemConfig" HeaderText="SystemConfig" />
                         <asp:BoundField DataField="attrPhaseConfig1" HeaderText="Phase 1" />
                         <asp:BoundField DataField="attrPhaseConfig2" HeaderText="Phase 2" />
                         <asp:BoundField DataField="attrPhaseConfig3" HeaderText="Phase 3" />

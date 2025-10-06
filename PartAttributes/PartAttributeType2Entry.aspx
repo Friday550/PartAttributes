@@ -1,9 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PartAttributeEntry.aspx.cs" Inherits="PartAttributes.PartAttributeEntry" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PartAttributeType2Entry.aspx.cs" Inherits="PartAttributes.PartAttributeType2Entry" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Part Attribute Entry</title>
+    <title>Part Attribute Entry - Type 2</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -30,7 +30,7 @@
             font-size: 16px;
             color: #333;
             margin-bottom: 10px;
-            border-bottom: 2px solid #007acc;
+            border-bottom: 2px solid #28a745;
             padding-bottom: 5px;
         }
         .form-row {
@@ -53,9 +53,9 @@
             font-size: 14px;
         }
         .form-row input:focus, .form-row select:focus {
-            border-color: #007acc;
+            border-color: #28a745;
             outline: none;
-            box-shadow: 0 0 5px rgba(0,122,204,0.3);
+            box-shadow: 0 0 5px rgba(40,167,69,0.3);
         }
         .button-container {
             text-align: center;
@@ -72,11 +72,11 @@
             cursor: pointer;
         }
         .btn-primary {
-            background-color: #007acc;
+            background-color: #28a745;
             color: white;
         }
         .btn-primary:hover {
-            background-color: #005a99;
+            background-color: #218838;
         }
         .btn-secondary {
             background-color: #6c757d;
@@ -95,16 +95,27 @@
         .required {
             color: red;
         }
+        .nav-link {
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        .nav-link:hover {
+            background-color: #545b62;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div class="form-container">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h1 style="text-align: center; color: #333; margin: 0;">Part Attribute Entry - iMPB</h1>
+                <h1 style="text-align: center; color: #333; margin: 0;">Part Attribute Entry - HPB</h1>
                 <div>
-                    <a href="PartAttributeType2Entry.aspx" style="padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; margin-right: 10px;">HPB Entry</a>
-                    <a href="ViewPartAttributes.aspx" style="padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px;">View Records</a>
+                    <a href="PartAttributeEntry.aspx" class="nav-link">iMPB Entry</a>
+                    <a href="ViewPartAttributes.aspx" class="nav-link">View Records</a>
                 </div>
             </div>
             
@@ -119,7 +130,6 @@
                     <label for="txtStandard">Standard <span class="required">*</span>:</label>
                     <asp:TextBox ID="txtStandard" runat="server" MaxLength="50" required="true"></asp:TextBox>
                 </div>
-
             </div>
 
             <!-- Electrical Ratings Section -->
@@ -151,28 +161,16 @@
                 </div>
             </div>
 
-            <!-- Phase Configuration Section -->
+            <!-- System Configuration Section (NEW) -->
             <div class="form-section">
-                <div class="section-title">Phase Configuration <span style="font-size: 12px; color: #666;">(Blank fields will default to "-")</span></div>
+                <div class="section-title">System Configuration <span style="font-size: 12px; color: #666;">(Blank will default to "-")</span></div>
                 <div class="form-row">
-                    <label for="txtPhaseConfig1">Phase Config 1:</label>
-                    <asp:TextBox ID="txtPhaseConfig1" runat="server" MaxLength="50"></asp:TextBox>
+                    <label for="txtSystemConfig">System Config:</label>
+                    <asp:TextBox ID="txtSystemConfig" runat="server" MaxLength="50"></asp:TextBox>
                 </div>
                 <div class="form-row">
-                    <label for="txtPhaseConfig2">Phase Config 2:</label>
-                    <asp:TextBox ID="txtPhaseConfig2" runat="server" MaxLength="50"></asp:TextBox>
-                </div>
-                <div class="form-row">
-                    <label for="txtPhaseConfig3">Phase Config 3:</label>
-                    <asp:TextBox ID="txtPhaseConfig3" runat="server" MaxLength="50"></asp:TextBox>
-                </div>
-                <div class="form-row">
-                    <label for="txtPhaseConfig4">Phase Config 4:</label>
-                    <asp:TextBox ID="txtPhaseConfig4" runat="server" MaxLength="50"></asp:TextBox>
-                </div>
-                <div class="form-row">
-                    <label for="txtPhaseConfig5">Phase Config 5:</label>
-                    <asp:TextBox ID="txtPhaseConfig5" runat="server" MaxLength="50"></asp:TextBox>
+                    <label for="txtNeutral">Neutral:</label>
+                    <asp:TextBox ID="txtNeutral" runat="server" MaxLength="50"></asp:TextBox>
                 </div>
             </div>
 

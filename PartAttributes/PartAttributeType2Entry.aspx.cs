@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace PartAttributes
 {
-    public partial class PartAttributeEntry : System.Web.UI.Page
+    public partial class PartAttributeType2Entry : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,7 +29,7 @@ namespace PartAttributes
                 // Get connection string
                 string connectionString = ConfigurationManager.ConnectionStrings["PartsDatabase"].ConnectionString;
 
-                // SQL Insert statement
+                // SQL Insert statement - Phase Config fields set to "-", new fields included
                 string sql = @"INSERT INTO tblPartAttribute 
                     (attrPartNumber, attrStandard, attrIRrating, attrRatedCurrent, attrRMSSym, 
                      attrSystemVolts, attrFrequency, attrGround, attrPhaseConfig1, attrPhaseConfig2, 
@@ -40,8 +40,7 @@ namespace PartAttributes
                      attrSerialNumber) 
                 VALUES 
                     (@PartNumber, @Standard, @IRRating, @RatedCurrent, @RMSSym, 
-                     @SystemVolts, @Frequency, @Ground, @PhaseConfig1, @PhaseConfig2, 
-                     @PhaseConfig3, @PhaseConfig4, @PhaseConfig5, '-', '-',
+                     @SystemVolts, @Frequency, @Ground, '-', '-', '-', '-', '-', @SystemConfig, @Neutral,
                      @Breaker1, @Breaker1Outlet, @Breaker1Amps, @Breaker2, @Breaker2Outlet, 
                      @Breaker2Amps, @Breaker3, @Breaker3Outlet, @Breaker3Amps, @Breaker4, 
                      @Breaker4Outlet, @Breaker4Amps, @Breaker5, @Breaker5Outlet, @Breaker5Amps, 
@@ -102,12 +101,11 @@ namespace PartAttributes
             command.Parameters.AddWithValue("@Frequency", txtFrequency.Text.Trim());
             command.Parameters.AddWithValue("@Ground", txtGround.Text.Trim());
 
-            // Phase Configuration - use "-" if blank
-            command.Parameters.AddWithValue("@PhaseConfig1", string.IsNullOrWhiteSpace(txtPhaseConfig1.Text) ? "-" : txtPhaseConfig1.Text.Trim());
-            command.Parameters.AddWithValue("@PhaseConfig2", string.IsNullOrWhiteSpace(txtPhaseConfig2.Text) ? "-" : txtPhaseConfig2.Text.Trim());
-            command.Parameters.AddWithValue("@PhaseConfig3", string.IsNullOrWhiteSpace(txtPhaseConfig3.Text) ? "-" : txtPhaseConfig3.Text.Trim());
-            command.Parameters.AddWithValue("@PhaseConfig4", string.IsNullOrWhiteSpace(txtPhaseConfig4.Text) ? "-" : txtPhaseConfig4.Text.Trim());
-            command.Parameters.AddWithValue("@PhaseConfig5", string.IsNullOrWhiteSpace(txtPhaseConfig5.Text) ? "-" : txtPhaseConfig5.Text.Trim());
+            // System Configuration (NEW) - use "-" if blank
+            command.Parameters.AddWithValue("@SystemConfig", string.IsNullOrWhiteSpace(txtSystemConfig.Text) ? "-" : txtSystemConfig.Text.Trim());
+            command.Parameters.AddWithValue("@Neutral", string.IsNullOrWhiteSpace(txtNeutral.Text) ? "-" : txtNeutral.Text.Trim());
+
+            // Phase Configuration fields are hardcoded to "-" in the SQL statement above
 
             // Breaker Information - use "-" if blank
             command.Parameters.AddWithValue("@Breaker1", string.IsNullOrWhiteSpace(txtBreaker1.Text) ? "-" : txtBreaker1.Text.Trim());
@@ -133,7 +131,7 @@ namespace PartAttributes
 
         private bool ValidateForm()
         {
-            // Check required fields (those marked as NOT NULL in your table)
+            // Check required fields
             if (string.IsNullOrWhiteSpace(txtPartNumber.Text))
             {
                 ShowMessage("Part Number is required.", Color.Red);
@@ -154,9 +152,6 @@ namespace PartAttributes
                 txtIRRating.Focus();
                 return false;
             }
-
-            // Add more validation as needed...
-            // You could check for proper data formats, ranges, etc.
 
             return true;
         }
@@ -179,11 +174,8 @@ namespace PartAttributes
             txtFrequency.Text = "";
             txtGround.Text = "";
 
-            txtPhaseConfig1.Text = "";
-            txtPhaseConfig2.Text = "";
-            txtPhaseConfig3.Text = "";
-            txtPhaseConfig4.Text = "";
-            txtPhaseConfig5.Text = "";
+            txtSystemConfig.Text = "";
+            txtNeutral.Text = "";
 
             txtBreaker1.Text = "";
             txtBreaker1Outlet.Text = "";
