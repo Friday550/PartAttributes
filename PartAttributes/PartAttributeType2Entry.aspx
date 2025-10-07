@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Part Attribute Entry - Type 2</title>
+    <title>Part Attribute Entry - HPB</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -163,104 +163,14 @@
 
             <!-- System Configuration Section (NEW) -->
             <div class="form-section">
-                <div class="section-title">System Configuration <span style="font-size: 12px; color: #666;">(Blank will default to "-")</span></div>
+                <div class="section-title">System Configuration <span style="font-size: 12px; color: #666;"></span></div>
                 <div class="form-row">
-                    <label for="txtSystemConfig">System Config:</label>
-                    <asp:TextBox ID="txtSystemConfig" runat="server" MaxLength="50"></asp:TextBox>
+                    <label for="txtSystemConfig">System Config <span class="required">*</span>:</label>
+                    <asp:TextBox ID="txtSystemConfig" runat="server" MaxLength="50" required="true"></asp:TextBox>
                 </div>
                 <div class="form-row">
-                    <label for="txtNeutral">Neutral:</label>
-                    <asp:TextBox ID="txtNeutral" runat="server" MaxLength="50"></asp:TextBox>
-                </div>
-            </div>
-
-            <!-- Breaker Information Section -->
-            <div class="form-section">
-                <div class="section-title">Breaker Information <span style="font-size: 12px; color: #666;">(Blank fields will default to "-")</span></div>
-                
-                <!-- Breaker 1 -->
-                <div style="background-color: #f0f8ff; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-                    <strong>Breaker 1</strong>
-                    <div class="form-row">
-                        <label for="txtBreaker1">Breaker 1:</label>
-                        <asp:TextBox ID="txtBreaker1" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                    <div class="form-row">
-                        <label for="txtBreaker1Outlet">Breaker 1 Outlet:</label>
-                        <asp:TextBox ID="txtBreaker1Outlet" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                    <div class="form-row">
-                        <label for="txtBreaker1Amps">Breaker 1 Amps:</label>
-                        <asp:TextBox ID="txtBreaker1Amps" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                </div>
-
-                <!-- Breaker 2 -->
-                <div style="background-color: #f0f8ff; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-                    <strong>Breaker 2</strong>
-                    <div class="form-row">
-                        <label for="txtBreaker2">Breaker 2:</label>
-                        <asp:TextBox ID="txtBreaker2" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                    <div class="form-row">
-                        <label for="txtBreaker2Outlet">Breaker 2 Outlet:</label>
-                        <asp:TextBox ID="txtBreaker2Outlet" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                    <div class="form-row">
-                        <label for="txtBreaker2Amps">Breaker 2 Amps:</label>
-                        <asp:TextBox ID="txtBreaker2Amps" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                </div>
-
-                <!-- Breaker 3 -->
-                <div style="background-color: #f0f8ff; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-                    <strong>Breaker 3</strong>
-                    <div class="form-row">
-                        <label for="txtBreaker3">Breaker 3:</label>
-                        <asp:TextBox ID="txtBreaker3" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                    <div class="form-row">
-                        <label for="txtBreaker3Outlet">Breaker 3 Outlet:</label>
-                        <asp:TextBox ID="txtBreaker3Outlet" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                    <div class="form-row">
-                        <label for="txtBreaker3Amps">Breaker 3 Amps:</label>
-                        <asp:TextBox ID="txtBreaker3Amps" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                </div>
-
-                <!-- Breaker 4 -->
-                <div style="background-color: #f0f8ff; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-                    <strong>Breaker 4</strong>
-                    <div class="form-row">
-                        <label for="txtBreaker4">Breaker 4:</label>
-                        <asp:TextBox ID="txtBreaker4" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                    <div class="form-row">
-                        <label for="txtBreaker4Outlet">Breaker 4 Outlet:</label>
-                        <asp:TextBox ID="txtBreaker4Outlet" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                    <div class="form-row">
-                        <label for="txtBreaker4Amps">Breaker 4 Amps:</label>
-                        <asp:TextBox ID="txtBreaker4Amps" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                </div>
-
-                <!-- Breaker 5 -->
-                <div style="background-color: #f0f8ff; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-                    <strong>Breaker 5</strong>
-                    <div class="form-row">
-                        <label for="txtBreaker5">Breaker 5:</label>
-                        <asp:TextBox ID="txtBreaker5" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                    <div class="form-row">
-                        <label for="txtBreaker5Outlet">Breaker 5 Outlet:</label>
-                        <asp:TextBox ID="txtBreaker5Outlet" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
-                    <div class="form-row">
-                        <label for="txtBreaker5Amps">Breaker 5 Amps:</label>
-                        <asp:TextBox ID="txtBreaker5Amps" runat="server" MaxLength="50"></asp:TextBox>
-                    </div>
+                    <label for="txtNeutral">Neutral <span class="required">*</span>:</label>
+                    <asp:TextBox ID="txtNeutral" runat="server" MaxLength="50" required="true"></asp:TextBox>
                 </div>
             </div>
 

@@ -34,16 +34,10 @@ namespace PartAttributes
                     (attrPartNumber, attrStandard, attrIRrating, attrRatedCurrent, attrRMSSym, 
                      attrSystemVolts, attrFrequency, attrGround, attrPhaseConfig1, attrPhaseConfig2, 
                      attrPhaseConfig3, attrPhaseConfig4, attrPhaseConfig5, attrSystemConfig, attrNeutral,
-                     attrBreaker1, attrBreaker1Outlet, attrBreaker1Amps, attrBreaker2, attrBreaker2Outlet, 
-                     attrBreaker2Amps, attrBreaker3, attrBreaker3Outlet, attrBreaker3Amps, attrBreaker4, 
-                     attrBreaker4Outlet, attrBreaker4Amps, attrBreaker5, attrBreaker5Outlet, attrBreaker5Amps, 
                      attrSerialNumber) 
                 VALUES 
                     (@PartNumber, @Standard, @IRRating, @RatedCurrent, @RMSSym, 
                      @SystemVolts, @Frequency, @Ground, '-', '-', '-', '-', '-', @SystemConfig, @Neutral,
-                     @Breaker1, @Breaker1Outlet, @Breaker1Amps, @Breaker2, @Breaker2Outlet, 
-                     @Breaker2Amps, @Breaker3, @Breaker3Outlet, @Breaker3Amps, @Breaker4, 
-                     @Breaker4Outlet, @Breaker4Amps, @Breaker5, @Breaker5Outlet, @Breaker5Amps, 
                      @SerialNumber)";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -104,29 +98,6 @@ namespace PartAttributes
             // System Configuration (NEW) - use "-" if blank
             command.Parameters.AddWithValue("@SystemConfig", string.IsNullOrWhiteSpace(txtSystemConfig.Text) ? "-" : txtSystemConfig.Text.Trim());
             command.Parameters.AddWithValue("@Neutral", string.IsNullOrWhiteSpace(txtNeutral.Text) ? "-" : txtNeutral.Text.Trim());
-
-            // Phase Configuration fields are hardcoded to "-" in the SQL statement above
-
-            // Breaker Information - use "-" if blank
-            command.Parameters.AddWithValue("@Breaker1", string.IsNullOrWhiteSpace(txtBreaker1.Text) ? "-" : txtBreaker1.Text.Trim());
-            command.Parameters.AddWithValue("@Breaker1Outlet", string.IsNullOrWhiteSpace(txtBreaker1Outlet.Text) ? "-" : txtBreaker1Outlet.Text.Trim());
-            command.Parameters.AddWithValue("@Breaker1Amps", string.IsNullOrWhiteSpace(txtBreaker1Amps.Text) ? "-" : txtBreaker1Amps.Text.Trim());
-
-            command.Parameters.AddWithValue("@Breaker2", string.IsNullOrWhiteSpace(txtBreaker2.Text) ? "-" : txtBreaker2.Text.Trim());
-            command.Parameters.AddWithValue("@Breaker2Outlet", string.IsNullOrWhiteSpace(txtBreaker2Outlet.Text) ? "-" : txtBreaker2Outlet.Text.Trim());
-            command.Parameters.AddWithValue("@Breaker2Amps", string.IsNullOrWhiteSpace(txtBreaker2Amps.Text) ? "-" : txtBreaker2Amps.Text.Trim());
-
-            command.Parameters.AddWithValue("@Breaker3", string.IsNullOrWhiteSpace(txtBreaker3.Text) ? "-" : txtBreaker3.Text.Trim());
-            command.Parameters.AddWithValue("@Breaker3Outlet", string.IsNullOrWhiteSpace(txtBreaker3Outlet.Text) ? "-" : txtBreaker3Outlet.Text.Trim());
-            command.Parameters.AddWithValue("@Breaker3Amps", string.IsNullOrWhiteSpace(txtBreaker3Amps.Text) ? "-" : txtBreaker3Amps.Text.Trim());
-
-            command.Parameters.AddWithValue("@Breaker4", string.IsNullOrWhiteSpace(txtBreaker4.Text) ? "-" : txtBreaker4.Text.Trim());
-            command.Parameters.AddWithValue("@Breaker4Outlet", string.IsNullOrWhiteSpace(txtBreaker4Outlet.Text) ? "-" : txtBreaker4Outlet.Text.Trim());
-            command.Parameters.AddWithValue("@Breaker4Amps", string.IsNullOrWhiteSpace(txtBreaker4Amps.Text) ? "-" : txtBreaker4Amps.Text.Trim());
-
-            command.Parameters.AddWithValue("@Breaker5", string.IsNullOrWhiteSpace(txtBreaker5.Text) ? "-" : txtBreaker5.Text.Trim());
-            command.Parameters.AddWithValue("@Breaker5Outlet", string.IsNullOrWhiteSpace(txtBreaker5Outlet.Text) ? "-" : txtBreaker5Outlet.Text.Trim());
-            command.Parameters.AddWithValue("@Breaker5Amps", string.IsNullOrWhiteSpace(txtBreaker5Amps.Text) ? "-" : txtBreaker5Amps.Text.Trim());
         }
 
         private bool ValidateForm()
@@ -176,26 +147,6 @@ namespace PartAttributes
 
             txtSystemConfig.Text = "";
             txtNeutral.Text = "";
-
-            txtBreaker1.Text = "";
-            txtBreaker1Outlet.Text = "";
-            txtBreaker1Amps.Text = "";
-
-            txtBreaker2.Text = "";
-            txtBreaker2Outlet.Text = "";
-            txtBreaker2Amps.Text = "";
-
-            txtBreaker3.Text = "";
-            txtBreaker3Outlet.Text = "";
-            txtBreaker3Amps.Text = "";
-
-            txtBreaker4.Text = "";
-            txtBreaker4Outlet.Text = "";
-            txtBreaker4Amps.Text = "";
-
-            txtBreaker5.Text = "";
-            txtBreaker5Outlet.Text = "";
-            txtBreaker5Amps.Text = "";
 
             // Clear status message
             lblStatus.Text = "";

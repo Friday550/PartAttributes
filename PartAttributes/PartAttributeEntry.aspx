@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Part Attribute Entry</title>
+    <title>Part Attribute Entry - iMPB</title>
     <style>
         body {
             font-family: Arial, sans-serif;
