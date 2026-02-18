@@ -127,7 +127,7 @@
                     <asp:TextBox ID="txtPartNumber" runat="server" MaxLength="50" required="true"></asp:TextBox>
                 </div>
                 <div class="form-row">
-                    <label for="txtStandard">Standard <span class="required">*</span>:</label>
+                    <label for="txtStandard">Standard/ Camlock <span class="required">*</span>:</label>
                     <asp:TextBox ID="txtStandard" runat="server" MaxLength="50" required="true"></asp:TextBox>
                 </div>
             </div>
@@ -144,7 +144,7 @@
                     <asp:TextBox ID="txtRatedCurrent" runat="server" MaxLength="50" required="true"></asp:TextBox>
                 </div>
                 <div class="form-row">
-                    <label for="txtRMSSym">RMS Sym <span class="required">*</span>:</label>
+                    <label for="txtRMSSym">RMS Sym/ Protection Device <span class="required">*</span>:</label>
                     <asp:TextBox ID="txtRMSSym" runat="server" MaxLength="50" required="true"></asp:TextBox>
                 </div>
                 <div class="form-row">
