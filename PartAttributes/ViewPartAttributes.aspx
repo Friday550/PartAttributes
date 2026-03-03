@@ -165,9 +165,8 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             background: #b0b0b0;
-            /* label 240x576 scaled 2x = 480x1152, plus label page body padding */
-            width:  520px;
-            height: 1240px;
+            /* sized dynamically by JS based on selected template */
+            display: block;
         }
     </style>
 </head>
@@ -352,10 +351,10 @@
                                 <span class="t-badge soon">Coming Soon</span>
                             </div>
 
-                            <div class="template-tile disabled" title="Coming soon">
+                            <div class="template-tile" id="tileHPB" onclick="loadTemplate('HPB')">
                                 <div class="t-name">HPB</div>
                                 <div class="t-size">2.5&quot; &times; 6&quot; &bull; Horizontal</div>
-                                <span class="t-badge soon">Coming Soon</span>
+                                <span class="t-badge ready">&#10003; Ready</span>
                             </div>
 
                             <div class="template-tile disabled" title="Coming soon">
@@ -521,44 +520,55 @@
             function resetPreviewPanel() {
                 document.getElementById('previewFrameWrap').classList.remove('visible');
                 document.getElementById('labelIframe').src = 'about:blank';
-                // De-select all tiles
                 document.querySelectorAll('.template-tile.active').forEach(function (t) {
                     t.classList.remove('active');
                 });
-                document.getElementById('modalContent').classList.remove('preview-wide');
+                var mc = document.getElementById('modalContent');
+                mc.classList.remove('preview-wide');
+                mc.style.width = '';  // clear dynamic inline width so modal returns to default
             }
 
             // ── Preview: load a template ───────────────────────────────────
             var TEMPLATE_FILES = {
                 'IMPB': 'label-impb.html',
-                'MTS': null,   // placeholder
-                'HPB': null,   // placeholder
-                'GBOX': null    // placeholder
+                'MTS': null,              // placeholder
+                'HPB': 'label-hpb.html',
+                'GBOX': null               // placeholder
+            };
+
+            // iframe dimensions per template (label px scaled 2x + body padding)
+            var TEMPLATE_SIZES = {
+                'IMPB': { w: 520, h: 1240 },  // 240x576 vertical scaled 2x
+                'HPB': { w: 1200, h: 540 },  // 576x240 horizontal scaled 2x
+                'MTS': { w: 1200, h: 540 },  // placeholder
+                'GBOX': { w: 1200, h: 540 }   // placeholder
             };
 
             function loadTemplate(name) {
                 var file = TEMPLATE_FILES[name];
-                if (!file) return;   // disabled — shouldn't be reachable but guard anyway
+                if (!file) return;
 
                 // Mark tile active
                 document.querySelectorAll('.template-tile').forEach(function (t) { t.classList.remove('active'); });
                 document.getElementById('tile' + name).classList.add('active');
 
-                // Widen modal
-                document.getElementById('modalContent').classList.add('preview-wide');
+                // Size iframe and modal dynamically for this template's orientation
+                var size = TEMPLATE_SIZES[name] || { w: 520, h: 1240 };
+                var iframe = document.getElementById('labelIframe');
+                iframe.style.width = size.w + 'px';
+                iframe.style.height = size.h + 'px';
+
+                var mc = document.getElementById('modalContent');
+                mc.style.width = (size.w + 48) + 'px';
+                mc.classList.add('preview-wide');
 
                 // Show iframe area
                 var wrap = document.getElementById('previewFrameWrap');
                 wrap.classList.add('visible');
                 document.getElementById('previewFrameLabel').textContent = name + ' Label Preview';
 
-                // Load the label page into the iframe
+                // Handshake: send data once label page signals ready
                 var iframe = document.getElementById('labelIframe');
-
-                // Once iframe loads, push data via postMessage
-                // When the label page is ready (QRCode lib loaded + signals back),
-                // send the data. This replaces the old fixed timeout and fixes
-                // the QR code race condition.
                 function onLabelReady(evt) {
                     if (evt.data && evt.data.type === 'LABEL_READY') {
                         window.removeEventListener('message', onLabelReady);
@@ -592,3 +602,4 @@
     </form>
 </body>
 </html>
+
