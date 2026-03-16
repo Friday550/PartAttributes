@@ -24,13 +24,13 @@ namespace PartAttributes
                      attrSystemVolts, attrFrequency, attrGround,
                      attrPhaseConfig1, attrPhaseConfig2, attrPhaseConfig3, attrPhaseConfig4, attrPhaseConfig5,
                      attrSystemConfig, attrNeutral,
-                     attrSerialNumber)
+                     attrSerialNumber, attrListed)
                 VALUES 
                     (@PartNumber, @Standard, @IRRating, @RatedCurrent, @RMSSym,
                      @SystemVolts, @Frequency, @Ground,
                      '-', '-', '-', '-', '-',
                      @SystemConfig, @Neutral,
-                     @SerialNumber)";
+                     @SerialNumber, @Listed)";
 
             int rows = ExecuteNonQuery(sql, cmd =>
             {
@@ -47,6 +47,9 @@ namespace PartAttributes
 
                 cmd.Parameters.AddWithValue("@SystemConfig", DashIfBlank(txtSystemConfig.Text));
                 cmd.Parameters.AddWithValue("@Neutral", DashIfBlank(txtNeutral.Text));
+
+                // Listed: 1 if checked, 0 if unchecked
+                cmd.Parameters.AddWithValue("@Listed", chkListed.Checked ? 1 : 0);
             });
 
             if (rows > 0)
@@ -86,6 +89,8 @@ namespace PartAttributes
             txtRatedCurrent.Text = txtRMSSym.Text = txtSystemVolts.Text = "";
             txtFrequency.Text = txtGround.Text = "";
             txtSystemConfig.Text = txtNeutral.Text = "";
+
+            chkListed.Checked = false;
 
             StatusLabel.Text = "";
         }

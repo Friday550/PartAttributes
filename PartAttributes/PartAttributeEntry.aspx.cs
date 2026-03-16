@@ -21,7 +21,7 @@ namespace PartAttributes
 
             const string sql = @"
                 INSERT INTO tblPartAttribute 
-                    (attrPartNumber, attrStandard, attrIRrating, attrRatedCurrent, attrRMSSym, 
+                    (attrPartNumber, attrStandard,attrListed, attrIRrating, attrRatedCurrent, attrRMSSym, 
                      attrSystemVolts, attrFrequency, attrGround,
                      attrPhaseConfig1, attrPhaseConfig2, attrPhaseConfig3, attrPhaseConfig4, attrPhaseConfig5,
                      attrSystemConfig, attrNeutral,
@@ -41,7 +41,7 @@ namespace PartAttributes
                      @Breaker3, @Breaker3Outlet, @Breaker3Amps,
                      @Breaker4, @Breaker4Outlet, @Breaker4Amps,
                      @Breaker5, @Breaker5Outlet, @Breaker5Amps,
-                     @SerialNumber)";
+                     @SerialNumber, @Listed)";
 
             int rows = ExecuteNonQuery(sql, cmd =>
             {
@@ -81,6 +81,9 @@ namespace PartAttributes
                 cmd.Parameters.AddWithValue("@Breaker5", DashIfBlank(txtBreaker5.Text));
                 cmd.Parameters.AddWithValue("@Breaker5Outlet", DashIfBlank(txtBreaker5Outlet.Text));
                 cmd.Parameters.AddWithValue("@Breaker5Amps", DashIfBlank(txtBreaker5Amps.Text));
+
+                // Listed: 1 if checked, 0 if unchecked
+                cmd.Parameters.AddWithValue("@Listed", chkListed.Checked ? 1 : 0);
             });
 
             if (rows > 0)
@@ -126,6 +129,8 @@ namespace PartAttributes
             txtBreaker3.Text = txtBreaker3Outlet.Text = txtBreaker3Amps.Text = "";
             txtBreaker4.Text = txtBreaker4Outlet.Text = txtBreaker4Amps.Text = "";
             txtBreaker5.Text = txtBreaker5Outlet.Text = txtBreaker5Amps.Text = "";
+
+            chkListed.Checked = false;
 
             StatusLabel.Text = "";
         }

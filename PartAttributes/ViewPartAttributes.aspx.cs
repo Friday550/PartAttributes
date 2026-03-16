@@ -117,7 +117,6 @@ namespace PartAttributes
                 return;
             }
 
-            // Use the original part number stored by JS in the hidden field
             string partNumber = hdnOrigPartNumber.Value;
 
             if (string.IsNullOrWhiteSpace(partNumber))
@@ -177,6 +176,7 @@ namespace PartAttributes
                     UPDATE tblPartAttribute SET
                         attrPartNumber   = @NewPartNumber,
                         attrStandard     = @Standard,
+                        attrListed       = @Listed,
                         attrIRrating     = @IRRating,
                         attrRatedCurrent = @RatedCurrent,
                         attrRMSSym       = @RMSSym,
@@ -215,6 +215,7 @@ namespace PartAttributes
                     // New values (Part Number may have changed)
                     cmd.Parameters.AddWithValue("@NewPartNumber", editPartNumber.Text.Trim());
                     cmd.Parameters.AddWithValue("@Standard", editStandard.Text.Trim());
+                    cmd.Parameters.AddWithValue("@Listed", editListed.Checked ? 1 : 0);
                     cmd.Parameters.AddWithValue("@IRRating", editIRRating.Text.Trim());
                     cmd.Parameters.AddWithValue("@RatedCurrent", editRatedCurrent.Text.Trim());
                     cmd.Parameters.AddWithValue("@RMSSym", editRMSSym.Text.Trim());
@@ -257,7 +258,6 @@ namespace PartAttributes
             }
             catch (SqlException sqlEx)
             {
-                // Catch duplicate key if the new Part Number already exists
                 ShowMessage(sqlEx.Number == 2627
                     ? "Error: A part with that Part Number already exists."
                     : "Database error: " + sqlEx.Message, Color.Red);

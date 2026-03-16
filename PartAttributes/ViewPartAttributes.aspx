@@ -34,6 +34,10 @@
         .actions-btn { background-color: #007acc; color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; font-size: 12px; }
         .actions-btn:hover { background-color: #005a99; }
 
+        /* Listed badge */
+        .listed-yes { display: inline-block; background: #d4edda; color: #155724; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 10px; }
+        .listed-no  { display: inline-block; background: #e2e3e5; color: #6c757d; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 10px; }
+
         /* ── Modal backdrop ── */
         .modal {
             display: none; position: fixed; z-index: 1000;
@@ -46,7 +50,7 @@
             background-color: white; margin: 40px auto; padding: 0;
             border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             overflow: hidden;
-            width: 520px;              /* default */
+            width: 520px;
             transition: width 0.25s ease;
         }
         .modal-content.preview-wide { width: 580px; }
@@ -95,6 +99,7 @@
             border-radius: 4px; font-size: 13px; box-sizing: border-box;
         }
         #panelEdit input[type="text"]:focus { border-color: #007acc; outline: none; box-shadow: 0 0 4px rgba(0,122,204,0.3); }
+        #panelEdit input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; flex: unset; }
         .part-number-note { font-size: 11px; color: #e07000; margin: -4px 0 10px 150px; font-style: italic; }
         .edit-save-btn { width: 100%; padding: 11px; background-color: #007acc; color: white; border: none; border-radius: 5px; font-size: 14px; cursor: pointer; margin-top: 10px; }
         .edit-save-btn:hover { background-color: #005a99; }
@@ -106,8 +111,6 @@
         .delete-confirm-btn:hover { background-color: #c9302c; }
 
         /* ── Preview panel ── */
-
-        /* Template picker grid */
         .template-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -136,7 +139,6 @@
         .t-badge.ready    { background: #d4edda; color: #155724; }
         .t-badge.soon     { background: #e2e3e5; color: #6c757d; }
 
-        /* iframe preview area */
         .preview-frame-wrap {
             display: none;
             flex-direction: column;
@@ -165,7 +167,6 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             background: #b0b0b0;
-            /* sized dynamically by JS based on selected template */
             display: block;
         }
     </style>
@@ -215,6 +216,13 @@
                         </asp:TemplateField>
                         <asp:BoundField DataField="attrPartNumber"    HeaderText="Part Number" />
                         <asp:BoundField DataField="attrStandard"      HeaderText="Standard" />
+                        <asp:TemplateField HeaderText="Listed">
+                            <ItemTemplate>
+                                <%# Convert.ToInt32(Eval("attrListed")) == 1
+                                    ? "<span class='listed-yes'>&#10003; Yes</span>"
+                                    : "<span class='listed-no'>No</span>" %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:BoundField DataField="attrIRrating"      HeaderText="IR Rating" />
                         <asp:BoundField DataField="attrRatedCurrent"  HeaderText="Rated Current" />
                         <asp:BoundField DataField="attrRMSSym"        HeaderText="RMS Sym" />
@@ -292,6 +300,10 @@
                             <label>Standard:</label>
                             <asp:TextBox ID="editStandard" runat="server" MaxLength="50"></asp:TextBox>
                         </div>
+                        <div class="edit-form-row">
+                            <label>Listed:</label>
+                            <asp:CheckBox ID="editListed" runat="server" />
+                        </div>
 
                         <div class="edit-section-title">Electrical Ratings</div>
                         <div class="edit-form-row"><label>IR Rating:</label>      <asp:TextBox ID="editIRRating"     runat="server" MaxLength="50"></asp:TextBox></div>
@@ -336,27 +348,22 @@
                     <div id="panelPreview" class="panel">
                         <button type="button" class="back-btn" onclick="showPanel('tiles')">&#8592; Back</button>
 
-                        <%-- Template picker --%>
                         <div class="template-grid" id="templateGrid">
-
                             <div class="template-tile" id="tileIMPB" onclick="loadTemplate('IMPB')">
                                 <div class="t-name">IMPB</div>
                                 <div class="t-size">2.5&quot; &times; 6&quot; &bull; Vertical</div>
                                 <span class="t-badge ready">&#10003; Ready</span>
                             </div>
-
                             <div class="template-tile disabled" title="Coming soon">
                                 <div class="t-name">MTS</div>
                                 <div class="t-size">2.5&quot; &times; 6&quot; &bull; Horizontal</div>
                                 <span class="t-badge soon">Coming Soon</span>
                             </div>
-
                             <div class="template-tile" id="tileHPB" onclick="loadTemplate('HPB')">
                                 <div class="t-name">HPB</div>
                                 <div class="t-size">2.5&quot; &times; 6&quot; &bull; Horizontal</div>
                                 <span class="t-badge ready">&#10003; Ready</span>
                             </div>
-
                             <div class="template-tile disabled" title="Coming soon">
                                 <div class="t-name">G-BOX</div>
                                 <div class="t-size">2.5&quot; &times; 6&quot; &bull; Horizontal</div>
@@ -364,7 +371,6 @@
                             </div>
                         </div>
 
-                        <%-- Label iframe (shown after template selected) --%>
                         <div class="preview-frame-wrap" id="previewFrameWrap">
                             <div class="preview-frame-toolbar">
                                 <span class="preview-frame-label" id="previewFrameLabel"></span>
@@ -396,20 +402,21 @@
         <script type="text/javascript">
 
             // ── Column index map (col 0 = Actions button) ──────────────────
+            // NOTE: Listed is col 3; all subsequent columns shift up by 1
             var COL = {
-                partNumber: 1, standard: 2, irRating: 3, ratedCurrent: 4,
-                rmsSym: 5, systemVolts: 6, frequency: 7, ground: 8,
-                neutral: 9, systemConfig: 10,
-                phaseConfig1: 11, phaseConfig2: 12, phaseConfig3: 13,
-                phaseConfig4: 14, phaseConfig5: 15,
-                breaker1: 16, breaker1Outlet: 17, breaker1Amps: 18,
-                breaker2: 19, breaker2Outlet: 20, breaker2Amps: 21,
-                breaker3: 22, breaker3Outlet: 23, breaker3Amps: 24,
-                breaker4: 25, breaker4Outlet: 26, breaker4Amps: 27,
-                breaker5: 28, breaker5Outlet: 29, breaker5Amps: 30
+                partNumber: 1, standard: 2, listed: 3,
+                irRating: 4, ratedCurrent: 5,
+                rmsSym: 6, systemVolts: 7, frequency: 8, ground: 9,
+                neutral: 10, systemConfig: 11,
+                phaseConfig1: 12, phaseConfig2: 13, phaseConfig3: 14,
+                phaseConfig4: 15, phaseConfig5: 16,
+                breaker1: 17, breaker1Outlet: 18, breaker1Amps: 19,
+                breaker2: 20, breaker2Outlet: 21, breaker2Amps: 22,
+                breaker3: 23, breaker3Outlet: 24, breaker3Amps: 25,
+                breaker4: 26, breaker4Outlet: 27, breaker4Amps: 28,
+                breaker5: 29, breaker5Outlet: 30, breaker5Amps: 31
             };
 
-            // Current row data — built when modal opens, reused by loadTemplate
             var _rowData = {};
 
             function cell(row, idx) {
@@ -418,20 +425,27 @@
             function fill(clientId, value) {
                 var el = document.getElementById(clientId); if (el) el.value = value;
             }
+            function setCheck(clientId, value) {
+                var el = document.getElementById(clientId); if (el) el.checked = (value === '1' || value === 1 || value === true);
+            }
 
             // ── Open modal ─────────────────────────────────────────────────
             function showActionsModal(btn) {
                 var row = btn.closest('tr');
                 var pn = cell(row, COL.partNumber);
 
+                // Read the raw text of the Listed cell to determine 0/1
+                var listedCell = row.cells[COL.listed];
+                var listedVal = listedCell && listedCell.querySelector('.listed-yes') ? 1 : 0;
+
                 fill('<%= hdnRowIndex.ClientID %>', (row.rowIndex - 1).toString());
                 fill('<%= hdnOrigPartNumber.ClientID %>', pn);
                 document.getElementById('modalPartLabel').innerText = 'Part: ' + pn;
 
-                // Capture all field values for preview data passing
                 _rowData = {
                     partNumber: pn,
                     standard: cell(row, COL.standard),
+                    listed: listedVal,
                     irRating: cell(row, COL.irRating),
                     ratedCurrent: cell(row, COL.ratedCurrent),
                     rmsSym: cell(row, COL.rmsSym),
@@ -453,6 +467,7 @@
                 // Populate edit fields
                 fill('<%= editPartNumber.ClientID %>', _rowData.partNumber);
                 fill('<%= editStandard.ClientID %>', _rowData.standard);
+                setCheck('<%= editListed.ClientID %>', _rowData.listed);
                 fill('<%= editIRRating.ClientID %>', _rowData.irRating);
                 fill('<%= editRatedCurrent.ClientID %>', _rowData.ratedCurrent);
                 fill('<%= editRMSSym.ClientID %>', _rowData.rmsSym);
@@ -491,7 +506,6 @@
             function hideActionsModal() {
                 document.getElementById('actionsModal').style.display = 'none';
                 fill('<%= txtDeletePassword.ClientID %>', '');
-                // Reset iframe and preview state
                 resetPreviewPanel();
                 document.getElementById('modalContent').classList.remove('preview-wide');
             }
@@ -512,7 +526,7 @@
                 if (name === 'delete') { document.getElementById('panelDelete').style.display = 'block'; mc.classList.remove('preview-wide'); }
                 if (name === 'preview') {
                     document.getElementById('panelPreview').style.display = 'block';
-                    resetPreviewPanel();      // always start on template picker
+                    resetPreviewPanel();
                 }
             }
 
@@ -525,34 +539,31 @@
                 });
                 var mc = document.getElementById('modalContent');
                 mc.classList.remove('preview-wide');
-                mc.style.width = '';  // clear dynamic inline width so modal returns to default
+                mc.style.width = '';
             }
 
             // ── Preview: load a template ───────────────────────────────────
             var TEMPLATE_FILES = {
                 'IMPB': 'label-impb.html',
-                'MTS': null,              // placeholder
+                'MTS': null,
                 'HPB': 'label-hpb.html',
-                'GBOX': null               // placeholder
+                'GBOX': null
             };
 
-            // iframe dimensions per template (label px scaled 2x + body padding)
             var TEMPLATE_SIZES = {
-                'IMPB': { w: 520, h: 1240 },  // 240x576 vertical scaled 2x
-                'HPB': { w: 1200, h: 540 },  // 576x240 horizontal scaled 2x
-                'MTS': { w: 1200, h: 540 },  // placeholder
-                'GBOX': { w: 1200, h: 540 }   // placeholder
+                'IMPB': { w: 520, h: 1240 },
+                'HPB': { w: 1200, h: 540 },
+                'MTS': { w: 1200, h: 540 },
+                'GBOX': { w: 1200, h: 540 }
             };
 
             function loadTemplate(name) {
                 var file = TEMPLATE_FILES[name];
                 if (!file) return;
 
-                // Mark tile active
                 document.querySelectorAll('.template-tile').forEach(function (t) { t.classList.remove('active'); });
                 document.getElementById('tile' + name).classList.add('active');
 
-                // Size iframe and modal dynamically for this template's orientation
                 var size = TEMPLATE_SIZES[name] || { w: 520, h: 1240 };
                 var iframe = document.getElementById('labelIframe');
                 iframe.style.width = size.w + 'px';
@@ -562,13 +573,10 @@
                 mc.style.width = (size.w + 48) + 'px';
                 mc.classList.add('preview-wide');
 
-                // Show iframe area
                 var wrap = document.getElementById('previewFrameWrap');
                 wrap.classList.add('visible');
                 document.getElementById('previewFrameLabel').textContent = name + ' Label Preview';
 
-                // Handshake: send data once label page signals ready
-                var iframe = document.getElementById('labelIframe');
                 function onLabelReady(evt) {
                     if (evt.data && evt.data.type === 'LABEL_READY') {
                         window.removeEventListener('message', onLabelReady);
@@ -602,4 +610,3 @@
     </form>
 </body>
 </html>
-

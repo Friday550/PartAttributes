@@ -52,6 +52,13 @@
             border-radius: 4px;
             font-size: 14px;
         }
+        .form-row input[type="checkbox"] {
+            flex: unset;
+            width: 18px;
+            height: 18px;
+            padding: 0;
+            cursor: pointer;
+        }
         .form-row input:focus, .form-row select:focus {
             border-color: #28a745;
             outline: none;
@@ -130,6 +137,10 @@
                     <label for="txtStandard">Standard/ Camlock <span class="required">*</span>:</label>
                     <asp:TextBox ID="txtStandard" runat="server" MaxLength="50" required="true"></asp:TextBox>
                 </div>
+                <div class="form-row">
+                    <label for="chkListed">Listed:</label>
+                    <asp:CheckBox ID="chkListed" runat="server" />
+                </div>
             </div>
 
             <!-- Electrical Ratings Section -->
@@ -161,9 +172,9 @@
                 </div>
             </div>
 
-            <!-- System Configuration Section (NEW) -->
+            <!-- System Configuration Section -->
             <div class="form-section">
-                <div class="section-title">System Configuration <span style="font-size: 12px; color: #666;"></span></div>
+                <div class="section-title">System Configuration</div>
                 <div class="form-row">
                     <label for="txtSystemConfig">System Config/</br >Protection Device <span class="required">*</span>:</label>
                     <asp:TextBox ID="txtSystemConfig" runat="server" MaxLength="50" required="true"></asp:TextBox>
@@ -188,3 +199,4 @@
     </form>
 </body>
 </html>
+

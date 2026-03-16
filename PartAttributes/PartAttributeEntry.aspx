@@ -52,6 +52,13 @@
             border-radius: 4px;
             font-size: 14px;
         }
+        .form-row input[type="checkbox"] {
+            flex: unset;
+            width: 18px;
+            height: 18px;
+            padding: 0;
+            cursor: pointer;
+        }
         .form-row input:focus, .form-row select:focus {
             border-color: #007acc;
             outline: none;
@@ -119,7 +126,10 @@
                     <label for="txtStandard">Standard <span class="required">*</span>:</label>
                     <asp:TextBox ID="txtStandard" runat="server" MaxLength="50" required="true"></asp:TextBox>
                 </div>
-
+                <div class="form-row">
+                    <label for="chkListed">Listed:</label>
+                    <asp:CheckBox ID="chkListed" runat="server" />
+                </div>
             </div>
 
             <!-- Electrical Ratings Section -->
