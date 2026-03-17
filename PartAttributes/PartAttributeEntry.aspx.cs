@@ -32,7 +32,7 @@ namespace PartAttributes
                      attrBreaker5, attrBreaker5Outlet, attrBreaker5Amps,
                      attrSerialNumber) 
                 VALUES 
-                    (@PartNumber, @Standard, @IRRating, @RatedCurrent, @RMSSym,
+                    (@PartNumber, @Standard,@Listed, @IRRating, @RatedCurrent, @RMSSym,
                      @SystemVolts, @Frequency, @Ground,
                      @PhaseConfig1, @PhaseConfig2, @PhaseConfig3, @PhaseConfig4, @PhaseConfig5,
                      '-', '-',
@@ -41,7 +41,7 @@ namespace PartAttributes
                      @Breaker3, @Breaker3Outlet, @Breaker3Amps,
                      @Breaker4, @Breaker4Outlet, @Breaker4Amps,
                      @Breaker5, @Breaker5Outlet, @Breaker5Amps,
-                     @SerialNumber, @Listed)";
+                     @SerialNumber)";
 
             int rows = ExecuteNonQuery(sql, cmd =>
             {

@@ -20,17 +20,17 @@ namespace PartAttributes
 
             const string sql = @"
                 INSERT INTO tblPartAttribute 
-                    (attrPartNumber, attrStandard, attrIRrating, attrRatedCurrent, attrRMSSym,
+                    (attrPartNumber, attrStandard,attrListed, attrIRrating, attrRatedCurrent, attrRMSSym,
                      attrSystemVolts, attrFrequency, attrGround,
                      attrPhaseConfig1, attrPhaseConfig2, attrPhaseConfig3, attrPhaseConfig4, attrPhaseConfig5,
                      attrSystemConfig, attrNeutral,
-                     attrSerialNumber, attrListed)
+                     attrSerialNumber)
                 VALUES 
-                    (@PartNumber, @Standard, @IRRating, @RatedCurrent, @RMSSym,
+                    (@PartNumber, @Standard,@Listed, @IRRating, @RatedCurrent, @RMSSym,
                      @SystemVolts, @Frequency, @Ground,
                      '-', '-', '-', '-', '-',
                      @SystemConfig, @Neutral,
-                     @SerialNumber, @Listed)";
+                     @SerialNumber)";
 
             int rows = ExecuteNonQuery(sql, cmd =>
             {
