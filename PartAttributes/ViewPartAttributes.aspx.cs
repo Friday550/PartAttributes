@@ -34,9 +34,9 @@ namespace PartAttributes
                 BindGrid(dt);
                 lblStatus.Text = "";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ShowMessage("Error loading data: " + ex.Message, Color.Red);
+                ShowMessage("Error loading data. Please try again.", Color.Red);
             }
         }
 
@@ -70,9 +70,9 @@ namespace PartAttributes
                         : $"Found {dt.Rows.Count} record(s) matching '{searchTerm}'",
                     dt.Rows.Count == 0 ? Color.Orange : Color.Green);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ShowMessage("Error searching data: " + ex.Message, Color.Red);
+                ShowMessage("Error searching data. Please try again.", Color.Red);
             }
         }
 
@@ -141,9 +141,9 @@ namespace PartAttributes
                     ShowMessage("Error: Part not found or already deleted.", Color.Red);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ShowMessage("Error deleting record: " + ex.Message, Color.Red);
+                ShowMessage("Error deleting record. Please try again.", Color.Red);
             }
             finally
             {
@@ -204,7 +204,10 @@ namespace PartAttributes
                         attrBreaker4Amps   = @Breaker4Amps,
                         attrBreaker5       = @Breaker5,
                         attrBreaker5Outlet = @Breaker5Outlet,
-                        attrBreaker5Amps   = @Breaker5Amps
+                        attrBreaker5Amps   = @Breaker5Amps,
+                        attrBreaker6       = @Breaker6,
+                        attrBreaker6Outlet = @Breaker6Outlet,
+                        attrBreaker6Amps   = @Breaker6Amps
                     WHERE attrPartNumber = @OrigPartNumber";
 
                 int rows = RunNonQuery(sql, cmd =>
@@ -244,6 +247,9 @@ namespace PartAttributes
                     cmd.Parameters.AddWithValue("@Breaker5", DashIfBlank(editBreaker5.Text));
                     cmd.Parameters.AddWithValue("@Breaker5Outlet", DashIfBlank(editBreaker5Outlet.Text));
                     cmd.Parameters.AddWithValue("@Breaker5Amps", DashIfBlank(editBreaker5Amps.Text));
+                    cmd.Parameters.AddWithValue("@Breaker6", DashIfBlank(editBreaker6.Text));
+                    cmd.Parameters.AddWithValue("@Breaker6Outlet", DashIfBlank(editBreaker6Outlet.Text));
+                    cmd.Parameters.AddWithValue("@Breaker6Amps", DashIfBlank(editBreaker6Amps.Text));
                 });
 
                 if (rows > 0)
@@ -260,11 +266,11 @@ namespace PartAttributes
             {
                 ShowMessage(sqlEx.Number == 2627
                     ? "Error: A part with that Part Number already exists."
-                    : "Database error: " + sqlEx.Message, Color.Red);
+                    : "A database error occurred while updating. Please try again.", Color.Red);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ShowMessage("Error updating record: " + ex.Message, Color.Red);
+                ShowMessage("Error updating record. Please try again.", Color.Red);
             }
         }
 

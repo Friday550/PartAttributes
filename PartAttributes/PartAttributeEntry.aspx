@@ -274,6 +274,23 @@
                         <asp:TextBox ID="txtBreaker5Amps" runat="server" MaxLength="50"></asp:TextBox>
                     </div>
                 </div>
+
+                <!-- Breaker 6 -->
+                <div style="background-color: #f0f8ff; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+                    <strong>Breaker 6</strong>
+                    <div class="form-row">
+                        <label for="txtBreaker6">Breaker 6:</label>
+                        <asp:TextBox ID="txtBreaker6" runat="server" MaxLength="50"></asp:TextBox>
+                    </div>
+                    <div class="form-row">
+                        <label for="txtBreaker6Outlet">Breaker 6 Outlet:</label>
+                        <asp:TextBox ID="txtBreaker6Outlet" runat="server" MaxLength="50"></asp:TextBox>
+                    </div>
+                    <div class="form-row">
+                        <label for="txtBreaker6Amps">Breaker 6 Amps:</label>
+                        <asp:TextBox ID="txtBreaker6Amps" runat="server" MaxLength="50"></asp:TextBox>
+                    </div>
+                </div>
             </div>
 
             <!-- Buttons -->

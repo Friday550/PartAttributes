@@ -415,6 +415,7 @@
                 <tr><td class="brk-num">3</td><td class="brk-cell" id="lbl-b3">-</td><td class="brk-cell" id="lbl-b3out">-</td><td class="brk-cell" id="lbl-b3amp">-</td></tr>
                 <tr><td class="brk-num">4</td><td class="brk-cell" id="lbl-b4">-</td><td class="brk-cell" id="lbl-b4out">-</td><td class="brk-cell" id="lbl-b4amp">-</td></tr>
                 <tr><td class="brk-num">5</td><td class="brk-cell" id="lbl-b5">-</td><td class="brk-cell" id="lbl-b5out">-</td><td class="brk-cell" id="lbl-b5amp">-</td></tr>
+                <tr><td class="brk-num">6</td><td class="brk-cell" id="lbl-b6">-</td><td class="brk-cell" id="lbl-b6out">-</td><td class="brk-cell" id="lbl-b6amp">-</td></tr>
             </table>
             <div class="disclaimer">*Short Circuit Rating is limited to the lowest short circuit rating of any component and/or fitting installed</div>
             <table>
@@ -481,6 +482,7 @@
                 b3: p.get("b3") || "-", b3out: p.get("b3out") || "-", b3amp: p.get("b3amp") || "-",
                 b4: p.get("b4") || "-", b4out: p.get("b4out") || "-", b4amp: p.get("b4amp") || "-",
                 b5: p.get("b5") || "-", b5out: p.get("b5out") || "-", b5amp: p.get("b5amp") || "-",
+                b6: p.get("b6") || "-", b6out: p.get("b6out") || "-", b6amp: p.get("b6amp") || "-",
                 listed: p.get("listed") || 0
             };
         }
@@ -509,6 +511,7 @@
             set("lbl-b3", d.b3); set("lbl-b3out", d.b3out); set("lbl-b3amp", d.b3amp);
             set("lbl-b4", d.b4); set("lbl-b4out", d.b4out); set("lbl-b4amp", d.b4amp);
             set("lbl-b5", d.b5); set("lbl-b5out", d.b5out); set("lbl-b5amp", d.b5amp);
+            set("lbl-b6", d.b6); set("lbl-b6out", d.b6out); set("lbl-b6amp", d.b6amp);
             set("lbl-testDate", todayFormatted());
             applyListedState(d.listed);
         }

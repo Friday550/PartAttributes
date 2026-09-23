@@ -30,6 +30,7 @@ namespace PartAttributes
                      attrBreaker3, attrBreaker3Outlet, attrBreaker3Amps,
                      attrBreaker4, attrBreaker4Outlet, attrBreaker4Amps,
                      attrBreaker5, attrBreaker5Outlet, attrBreaker5Amps,
+                     attrBreaker6, attrBreaker6Outlet, attrBreaker6Amps,
                      attrSerialNumber) 
                 VALUES 
                     (@PartNumber, @Standard,@Listed, @IRRating, @RatedCurrent, @RMSSym,
@@ -41,6 +42,7 @@ namespace PartAttributes
                      @Breaker3, @Breaker3Outlet, @Breaker3Amps,
                      @Breaker4, @Breaker4Outlet, @Breaker4Amps,
                      @Breaker5, @Breaker5Outlet, @Breaker5Amps,
+                     @Breaker6, @Breaker6Outlet, @Breaker6Amps,
                      @SerialNumber)";
 
             int rows = ExecuteNonQuery(sql, cmd =>
@@ -81,6 +83,10 @@ namespace PartAttributes
                 cmd.Parameters.AddWithValue("@Breaker5", DashIfBlank(txtBreaker5.Text));
                 cmd.Parameters.AddWithValue("@Breaker5Outlet", DashIfBlank(txtBreaker5Outlet.Text));
                 cmd.Parameters.AddWithValue("@Breaker5Amps", DashIfBlank(txtBreaker5Amps.Text));
+
+                cmd.Parameters.AddWithValue("@Breaker6", DashIfBlank(txtBreaker6.Text));
+                cmd.Parameters.AddWithValue("@Breaker6Outlet", DashIfBlank(txtBreaker6Outlet.Text));
+                cmd.Parameters.AddWithValue("@Breaker6Amps", DashIfBlank(txtBreaker6Amps.Text));
 
                 // Listed: 1 if checked, 0 if unchecked
                 cmd.Parameters.AddWithValue("@Listed", chkListed.Checked ? 1 : 0);
@@ -129,6 +135,7 @@ namespace PartAttributes
             txtBreaker3.Text = txtBreaker3Outlet.Text = txtBreaker3Amps.Text = "";
             txtBreaker4.Text = txtBreaker4Outlet.Text = txtBreaker4Amps.Text = "";
             txtBreaker5.Text = txtBreaker5Outlet.Text = txtBreaker5Amps.Text = "";
+            txtBreaker6.Text = txtBreaker6Outlet.Text = txtBreaker6Amps.Text = "";
 
             chkListed.Checked = false;
 

@@ -251,6 +251,9 @@
                         <asp:BoundField DataField="attrBreaker5"       HeaderText="Breaker 5" />
                         <asp:BoundField DataField="attrBreaker5Outlet" HeaderText="B5 Outlet" />
                         <asp:BoundField DataField="attrBreaker5Amps"   HeaderText="B5 Amps" />
+                        <asp:BoundField DataField="attrBreaker6"       HeaderText="Breaker 6" />
+                        <asp:BoundField DataField="attrBreaker6Outlet" HeaderText="B6 Outlet" />
+                        <asp:BoundField DataField="attrBreaker6Amps"   HeaderText="B6 Amps" />
                     </Columns>
                     <PagerStyle HorizontalAlign="Center" CssClass="pager" />
                 </asp:GridView>
@@ -270,7 +273,6 @@
                         <button type="button" class="modal-close" onclick="hideActionsModal()">&#x2715;</button>
                     </div>
 
-                    <asp:HiddenField ID="hdnRowIndex"       runat="server" />
                     <asp:HiddenField ID="hdnOrigPartNumber" runat="server" />
 
                     <%-- ── Panel: Tiles ── --%>
@@ -340,6 +342,9 @@
                         <div class="edit-form-row"><label>Breaker 5:</label>  <asp:TextBox ID="editBreaker5"       runat="server" MaxLength="50"></asp:TextBox></div>
                         <div class="edit-form-row"><label>B5 Outlet:</label>  <asp:TextBox ID="editBreaker5Outlet" runat="server" MaxLength="50"></asp:TextBox></div>
                         <div class="edit-form-row"><label>B5 Amps:</label>    <asp:TextBox ID="editBreaker5Amps"   runat="server" MaxLength="50"></asp:TextBox></div>
+                        <div class="edit-form-row"><label>Breaker 6:</label>  <asp:TextBox ID="editBreaker6"       runat="server" MaxLength="50"></asp:TextBox></div>
+                        <div class="edit-form-row"><label>B6 Outlet:</label>  <asp:TextBox ID="editBreaker6Outlet" runat="server" MaxLength="50"></asp:TextBox></div>
+                        <div class="edit-form-row"><label>B6 Amps:</label>    <asp:TextBox ID="editBreaker6Amps"   runat="server" MaxLength="50"></asp:TextBox></div>
 
                         <asp:Button ID="btnSaveEdit" runat="server" Text="Save Changes" CssClass="edit-save-btn" OnClick="btnSaveEdit_Click" />
                     </div>
@@ -414,7 +419,8 @@
                 breaker2: 20, breaker2Outlet: 21, breaker2Amps: 22,
                 breaker3: 23, breaker3Outlet: 24, breaker3Amps: 25,
                 breaker4: 26, breaker4Outlet: 27, breaker4Amps: 28,
-                breaker5: 29, breaker5Outlet: 30, breaker5Amps: 31
+                breaker5: 29, breaker5Outlet: 30, breaker5Amps: 31,
+                breaker6: 32, breaker6Outlet: 33, breaker6Amps: 34
             };
 
             var _rowData = {};
@@ -438,7 +444,6 @@
                 var listedCell = row.cells[COL.listed];
                 var listedVal = listedCell && listedCell.querySelector('.listed-yes') ? 1 : 0;
 
-                fill('<%= hdnRowIndex.ClientID %>', (row.rowIndex - 1).toString());
                 fill('<%= hdnOrigPartNumber.ClientID %>', pn);
                 document.getElementById('modalPartLabel').innerText = 'Part: ' + pn;
 
@@ -461,7 +466,8 @@
                     b2: cell(row, COL.breaker2), b2out: cell(row, COL.breaker2Outlet), b2amp: cell(row, COL.breaker2Amps),
                     b3: cell(row, COL.breaker3), b3out: cell(row, COL.breaker3Outlet), b3amp: cell(row, COL.breaker3Amps),
                     b4: cell(row, COL.breaker4), b4out: cell(row, COL.breaker4Outlet), b4amp: cell(row, COL.breaker4Amps),
-                    b5: cell(row, COL.breaker5), b5out: cell(row, COL.breaker5Outlet), b5amp: cell(row, COL.breaker5Amps)
+                    b5: cell(row, COL.breaker5), b5out: cell(row, COL.breaker5Outlet), b5amp: cell(row, COL.breaker5Amps),
+                    b6: cell(row, COL.breaker6), b6out: cell(row, COL.breaker6Outlet), b6amp: cell(row, COL.breaker6Amps)
                 };
 
                 // Populate edit fields
@@ -496,6 +502,9 @@
                 fill('<%= editBreaker5.ClientID %>',       _rowData.b5);
                 fill('<%= editBreaker5Outlet.ClientID %>', _rowData.b5out);
                 fill('<%= editBreaker5Amps.ClientID %>',   _rowData.b5amp);
+                fill('<%= editBreaker6.ClientID %>',       _rowData.b6);
+                fill('<%= editBreaker6Outlet.ClientID %>', _rowData.b6out);
+                fill('<%= editBreaker6Amps.ClientID %>',   _rowData.b6amp);
 
                 fill('<%= txtDeletePassword.ClientID %>', '');
                 showPanel('tiles');

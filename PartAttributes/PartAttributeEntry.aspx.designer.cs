@@ -285,6 +285,33 @@ namespace PartAttributes
         protected global::System.Web.UI.WebControls.TextBox txtBreaker5Amps;
 
         /// <summary>
+        /// txtBreaker6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBreaker6;
+
+        /// <summary>
+        /// txtBreaker6Outlet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBreaker6Outlet;
+
+        /// <summary>
+        /// txtBreaker6Amps control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBreaker6Amps;
+
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>

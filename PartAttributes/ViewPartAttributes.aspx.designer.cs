@@ -78,15 +78,6 @@ namespace PartAttributes
         protected global::System.Web.UI.WebControls.GridView gvPartAttributes;
 
         /// <summary>
-        /// hdnRowIndex control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnRowIndex;
-
-        /// <summary>
         /// hdnOrigPartNumber control.
         /// </summary>
         /// <remarks>
@@ -373,6 +364,33 @@ namespace PartAttributes
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editBreaker5Amps;
+
+        /// <summary>
+        /// editBreaker6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox editBreaker6;
+
+        /// <summary>
+        /// editBreaker6Outlet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox editBreaker6Outlet;
+
+        /// <summary>
+        /// editBreaker6Amps control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox editBreaker6Amps;
 
         /// <summary>
         /// btnSaveEdit control.
