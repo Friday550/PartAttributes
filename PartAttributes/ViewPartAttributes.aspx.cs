@@ -32,7 +32,6 @@ namespace PartAttributes
                 string sql = "SELECT * FROM tblPartAttribute ORDER BY attrPartNumber";
                 DataTable dt = FetchData(sql, null);
                 BindGrid(dt);
-                lblStatus.Text = "";
             }
             catch (Exception)
             {
@@ -117,7 +116,7 @@ namespace PartAttributes
                 return;
             }
 
-            string partNumber = hdnOrigPartNumber.Value;
+            string partNumber = (hdnOrigPartNumber.Value ?? string.Empty).Trim();
 
             if (string.IsNullOrWhiteSpace(partNumber))
             {
@@ -140,6 +139,13 @@ namespace PartAttributes
                 {
                     ShowMessage("Error: Part not found or already deleted.", Color.Red);
                 }
+            }
+            catch (SqlException sqlEx)
+            {
+                // 229: the Integrated Security login can read the table but was not granted DELETE.
+                ShowMessage(sqlEx.Number == 229
+                    ? "Delete was denied. The database login does not have permission to delete part attributes."
+                    : "Error deleting record. Please try again.", Color.Red);
             }
             catch (Exception)
             {

@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Local SQL login. Copy ConnectionStrings.config.example and fill in the password.
+PartAttributes/ConnectionStrings.config
+
 # User-specific files
 *.rsuser
 *.suo

@@ -390,12 +390,12 @@
                     <%-- ── Panel: Delete ── --%>
                     <div id="panelDelete" class="panel">
                         <button type="button" class="back-btn" onclick="showPanel('tiles')">&#8592; Back</button>
-                        <div class="delete-panel-body">
+                        <asp:Panel ID="pnlConfirmDelete" runat="server" DefaultButton="btnConfirmDelete" CssClass="delete-panel-body">
                             <p>Are you sure you want to permanently delete this part?</p>
                             <p>Enter the admin password to confirm:</p>
                             <asp:TextBox ID="txtDeletePassword" runat="server" TextMode="Password" placeholder="Enter password"></asp:TextBox>
-                            <asp:Button  ID="btnConfirmDelete"  runat="server" Text="Confirm Delete" CssClass="delete-confirm-btn" OnClick="btnConfirmDelete_Click" />
-                        </div>
+                            <asp:Button  ID="btnConfirmDelete"  runat="server" Text="Confirm Delete" CssClass="delete-confirm-btn" OnClick="btnConfirmDelete_Click" CausesValidation="false" />
+                        </asp:Panel>
                     </div>
 
                 </div>

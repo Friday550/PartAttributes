@@ -184,7 +184,9 @@
     <Content Include="Site.Master" />
     <Content Include="ViewPartAttributes.aspx" />
     <Content Include="ViewSwitcher.ascx" />
+    <Content Include="ConnectionStrings.config" />
     <Content Include="Web.config" />
+    <None Include="ConnectionStrings.config.example" />
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
