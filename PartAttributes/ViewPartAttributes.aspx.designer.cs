@@ -366,6 +366,15 @@ namespace PartAttributes
         protected global::System.Web.UI.WebControls.TextBox editBreaker5Amps;
 
         /// <summary>
+        /// phBreaker6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phBreaker6;
+
+        /// <summary>
         /// editBreaker6 control.
         /// </summary>
         /// <remarks>

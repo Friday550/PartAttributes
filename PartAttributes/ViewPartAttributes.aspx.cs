@@ -16,9 +16,29 @@ namespace PartAttributes
         // ─────────────────────────────────────────────
         protected void Page_Load(object sender, EventArgs e)
         {
+            ApplyBreaker6Visibility(HasBreaker6);
+
             if (!IsPostBack)
             {
                 LoadAllPartAttributes();
+            }
+        }
+
+        // Breaker 6 is optional schema: hide and skip it until the columns exist.
+        private bool HasBreaker6 => PartAttributeSchema.HasBreaker6(GetConnectionString());
+
+        private void ApplyBreaker6Visibility(bool visible)
+        {
+            phBreaker6.Visible = visible;
+
+            foreach (DataControlField column in gvPartAttributes.Columns)
+            {
+                var field = column as BoundField;
+                if (field != null &&
+                    field.DataField.StartsWith("attrBreaker6", StringComparison.OrdinalIgnoreCase))
+                {
+                    column.Visible = visible;
+                }
             }
         }
 
@@ -176,9 +196,17 @@ namespace PartAttributes
                 return;
             }
 
+            bool hasBreaker6 = HasBreaker6;
+            string breaker6Set = hasBreaker6
+                ? @",
+                        attrBreaker6       = @Breaker6,
+                        attrBreaker6Outlet = @Breaker6Outlet,
+                        attrBreaker6Amps   = @Breaker6Amps"
+                : string.Empty;
+
             try
             {
-                const string sql = @"
+                string sql = $@"
                     UPDATE tblPartAttribute SET
                         attrPartNumber   = @NewPartNumber,
                         attrStandard     = @Standard,
@@ -210,10 +238,7 @@ namespace PartAttributes
                         attrBreaker4Amps   = @Breaker4Amps,
                         attrBreaker5       = @Breaker5,
                         attrBreaker5Outlet = @Breaker5Outlet,
-                        attrBreaker5Amps   = @Breaker5Amps,
-                        attrBreaker6       = @Breaker6,
-                        attrBreaker6Outlet = @Breaker6Outlet,
-                        attrBreaker6Amps   = @Breaker6Amps
+                        attrBreaker5Amps   = @Breaker5Amps{breaker6Set}
                     WHERE attrPartNumber = @OrigPartNumber";
 
                 int rows = RunNonQuery(sql, cmd =>
@@ -253,9 +278,12 @@ namespace PartAttributes
                     cmd.Parameters.AddWithValue("@Breaker5", DashIfBlank(editBreaker5.Text));
                     cmd.Parameters.AddWithValue("@Breaker5Outlet", DashIfBlank(editBreaker5Outlet.Text));
                     cmd.Parameters.AddWithValue("@Breaker5Amps", DashIfBlank(editBreaker5Amps.Text));
-                    cmd.Parameters.AddWithValue("@Breaker6", DashIfBlank(editBreaker6.Text));
-                    cmd.Parameters.AddWithValue("@Breaker6Outlet", DashIfBlank(editBreaker6Outlet.Text));
-                    cmd.Parameters.AddWithValue("@Breaker6Amps", DashIfBlank(editBreaker6Amps.Text));
+                    if (hasBreaker6)
+                    {
+                        cmd.Parameters.AddWithValue("@Breaker6", DashIfBlank(editBreaker6.Text));
+                        cmd.Parameters.AddWithValue("@Breaker6Outlet", DashIfBlank(editBreaker6Outlet.Text));
+                        cmd.Parameters.AddWithValue("@Breaker6Amps", DashIfBlank(editBreaker6Amps.Text));
+                    }
                 });
 
                 if (rows > 0)

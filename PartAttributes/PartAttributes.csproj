@@ -200,6 +200,7 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="PartAttributeSchema.cs" />
     <Compile Include="Partattributebaseclass.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

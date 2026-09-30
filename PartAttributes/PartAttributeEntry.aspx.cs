@@ -12,6 +12,15 @@ namespace PartAttributes
         // ---------------------------------------------------------------
         protected override Label StatusLabel => lblStatus;
 
+        // Breaker 6 is optional schema: hide and skip it until the columns exist.
+        private bool HasBreaker6 => PartAttributeSchema.HasBreaker6(GetConnectionString());
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            pnlBreaker6.Visible = HasBreaker6;
+        }
+
         // ---------------------------------------------------------------
         // Save
         // ---------------------------------------------------------------
@@ -19,7 +28,15 @@ namespace PartAttributes
         {
             if (!ValidateForm()) return;
 
-            const string sql = @"
+            bool hasBreaker6 = HasBreaker6;
+            string breaker6Columns = hasBreaker6
+                ? "attrBreaker6, attrBreaker6Outlet, attrBreaker6Amps,"
+                : string.Empty;
+            string breaker6Values = hasBreaker6
+                ? "@Breaker6, @Breaker6Outlet, @Breaker6Amps,"
+                : string.Empty;
+
+            string sql = $@"
                 INSERT INTO tblPartAttribute 
                     (attrPartNumber, attrStandard,attrListed, attrIRrating, attrRatedCurrent, attrRMSSym, 
                      attrSystemVolts, attrFrequency, attrGround,
@@ -30,7 +47,7 @@ namespace PartAttributes
                      attrBreaker3, attrBreaker3Outlet, attrBreaker3Amps,
                      attrBreaker4, attrBreaker4Outlet, attrBreaker4Amps,
                      attrBreaker5, attrBreaker5Outlet, attrBreaker5Amps,
-                     attrBreaker6, attrBreaker6Outlet, attrBreaker6Amps,
+                     {breaker6Columns}
                      attrSerialNumber) 
                 VALUES 
                     (@PartNumber, @Standard,@Listed, @IRRating, @RatedCurrent, @RMSSym,
@@ -42,7 +59,7 @@ namespace PartAttributes
                      @Breaker3, @Breaker3Outlet, @Breaker3Amps,
                      @Breaker4, @Breaker4Outlet, @Breaker4Amps,
                      @Breaker5, @Breaker5Outlet, @Breaker5Amps,
-                     @Breaker6, @Breaker6Outlet, @Breaker6Amps,
+                     {breaker6Values}
                      @SerialNumber)";
 
             int rows = ExecuteNonQuery(sql, cmd =>
@@ -84,9 +101,12 @@ namespace PartAttributes
                 cmd.Parameters.AddWithValue("@Breaker5Outlet", DashIfBlank(txtBreaker5Outlet.Text));
                 cmd.Parameters.AddWithValue("@Breaker5Amps", DashIfBlank(txtBreaker5Amps.Text));
 
-                cmd.Parameters.AddWithValue("@Breaker6", DashIfBlank(txtBreaker6.Text));
-                cmd.Parameters.AddWithValue("@Breaker6Outlet", DashIfBlank(txtBreaker6Outlet.Text));
-                cmd.Parameters.AddWithValue("@Breaker6Amps", DashIfBlank(txtBreaker6Amps.Text));
+                if (hasBreaker6)
+                {
+                    cmd.Parameters.AddWithValue("@Breaker6", DashIfBlank(txtBreaker6.Text));
+                    cmd.Parameters.AddWithValue("@Breaker6Outlet", DashIfBlank(txtBreaker6Outlet.Text));
+                    cmd.Parameters.AddWithValue("@Breaker6Amps", DashIfBlank(txtBreaker6Amps.Text));
+                }
 
                 // Listed: 1 if checked, 0 if unchecked
                 cmd.Parameters.AddWithValue("@Listed", chkListed.Checked ? 1 : 0);

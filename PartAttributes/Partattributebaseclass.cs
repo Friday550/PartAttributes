@@ -128,13 +128,13 @@ namespace PartAttributes
                 if (sqlEx.Number == 2627)
                     ShowError("A part with this Part Number already exists.");
                 else
-                    ShowError("Database error: " + sqlEx.Message);
+                    ShowError("A database error occurred while saving. Please try again.");
 
                 return -1;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ShowError("Unexpected error: " + ex.Message);
+                ShowError("An unexpected error occurred while saving. Please try again.");
                 return -1;
             }
         }

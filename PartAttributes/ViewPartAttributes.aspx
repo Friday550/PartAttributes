@@ -342,9 +342,11 @@
                         <div class="edit-form-row"><label>Breaker 5:</label>  <asp:TextBox ID="editBreaker5"       runat="server" MaxLength="50"></asp:TextBox></div>
                         <div class="edit-form-row"><label>B5 Outlet:</label>  <asp:TextBox ID="editBreaker5Outlet" runat="server" MaxLength="50"></asp:TextBox></div>
                         <div class="edit-form-row"><label>B5 Amps:</label>    <asp:TextBox ID="editBreaker5Amps"   runat="server" MaxLength="50"></asp:TextBox></div>
+                        <asp:PlaceHolder ID="phBreaker6" runat="server">
                         <div class="edit-form-row"><label>Breaker 6:</label>  <asp:TextBox ID="editBreaker6"       runat="server" MaxLength="50"></asp:TextBox></div>
                         <div class="edit-form-row"><label>B6 Outlet:</label>  <asp:TextBox ID="editBreaker6Outlet" runat="server" MaxLength="50"></asp:TextBox></div>
                         <div class="edit-form-row"><label>B6 Amps:</label>    <asp:TextBox ID="editBreaker6Amps"   runat="server" MaxLength="50"></asp:TextBox></div>
+                        </asp:PlaceHolder>
 
                         <asp:Button ID="btnSaveEdit" runat="server" Text="Save Changes" CssClass="edit-save-btn" OnClick="btnSaveEdit_Click" />
                     </div>
@@ -467,7 +469,9 @@
                     b3: cell(row, COL.breaker3), b3out: cell(row, COL.breaker3Outlet), b3amp: cell(row, COL.breaker3Amps),
                     b4: cell(row, COL.breaker4), b4out: cell(row, COL.breaker4Outlet), b4amp: cell(row, COL.breaker4Amps),
                     b5: cell(row, COL.breaker5), b5out: cell(row, COL.breaker5Outlet), b5amp: cell(row, COL.breaker5Amps),
-                    b6: cell(row, COL.breaker6), b6out: cell(row, COL.breaker6Outlet), b6amp: cell(row, COL.breaker6Amps)
+                    b6: cell(row, COL.breaker6) || '-',
+                    b6out: cell(row, COL.breaker6Outlet) || '-',
+                    b6amp: cell(row, COL.breaker6Amps) || '-'
                 };
 
                 // Populate edit fields

@@ -176,7 +176,7 @@
             <div class="form-section">
                 <div class="section-title">System Configuration</div>
                 <div class="form-row">
-                    <label for="txtSystemConfig">System Config/</br >Protection Device <span class="required">*</span>:</label>
+                    <label for="txtSystemConfig">System Config/<br />Protection Device <span class="required">*</span>:</label>
                     <asp:TextBox ID="txtSystemConfig" runat="server" MaxLength="50" required="true"></asp:TextBox>
                 </div>
                 <div class="form-row">
